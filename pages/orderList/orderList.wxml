@@ -1,0 +1,79 @@
+<view class="orderlist">
+  <view class="orderlist-send-out-statistics">
+    <view class="orderlist-basic-info">
+      <view class="orderlist-deliver">配送员：</view>
+      <view class="orderlist-deliver-val">{{pantryman.pantrymanId}}</view>
+      <view class="orderlist-invite-code">推荐码: </view>
+      <view class="orderlist-invite-code-val">{{pantryman.inviteCode}}</view>
+    </view>
+    <view class="orderlist-static-text">本月数据</view>
+    <view class="orderlist-order-info">
+      <view class="orderlist-orders-info-firstrow">
+        <view class="orderlist-showbox">
+          <text class="orderlist-pointsum">总积分:</text>
+          <text class="orderlist-pointsum-val">1230</text>
+        </view>
+        <view class="orderlist-showbox">
+          <text class="orderlist-recommend" >推荐人数：</text>
+          <text class="orderlist-recommend-val" >10 </text>
+        </view>
+        <view class="orderlist-showbox">
+          <text class="orderlist-appraise" >用户评价：</text>
+          <text class="orderlist-appraise-val" >45</text>
+        </view>
+      </view>
+      <view class="orderlist-orders-info-secondrow" >
+        <view class="orderlist-showbox">
+          <text>待接订单：</text>
+          <text>{{readyToDeliverOrderCount}}</text>
+        </view>
+        <view class="orderlist-showbox">
+          <text>配送中订单：</text>
+          <text>{{deliveringOrderCount}}</text>
+        </view>
+        <view class="orderlist-showbox">
+          <text>已完成订单：</text>
+          <text>{{finishedOrderCount}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view> 
+    <view>订单信息</view>
+  </view>
+  <view class="orderlist-order-list" wx:for="{{orderList}}" wx:for-index="index" wx:key="id">
+    <navigator class="orderlist-order-info" url="../orderDetail/orderDetail?orderId={{item.orderId}}">
+      <view class="orderlist-order-info-firstrow">
+        <view class="orderlist-order-orderId">订单号：</view>
+        <view class="orderlist-order-orderId-val">{{item.orderId}}</view>
+      </view>  
+      <view class="orderlist-order-info-secondrow">
+        <view class="orderlist-order-detail">订单详情:</view>
+        <view>
+          <view class="orderlist-orderdetail-box" wx:for="{{mapOrderDetail[item.orderId]}}" wx:for-item="orderDetailItem" wx:for-index="orderDetailIndex" wx:key="orderDetailId">
+            <view class="orderlist-order-detail-val">{{mapGoodName[orderDetailItem.goodId].goodName}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text>X{{orderDetailItem.goodNum}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="orderlist-order-info-thirdrow">
+        <view class="orderlist-order-address">地址:</view>
+        <view class="orderlist-order-address-val">{{mapSchoolName[mapAddress[item.addressId].schoolId].schoolName}} {{mapDormitoryName[mapAddress[item.addressId].dormitoryId].dormitoryName}}</view>
+      </view>
+    </navigator>
+
+    <view class="order-status">
+      <view wx:if="{{item.orderStatus==0}}" >
+        <image class='orderlist-to-deliver-pic' bindtap="toDeliver" data-pantrymanid="{{item.pantryManId}}" data-orderId="{{item.orderId}}" data-status="{{item.orderStatus}}" src="../../image/icon/begin_delive.jpg">
+        </image>
+      </view>
+      <view wx:elif="{{item.orderStatus==1}}" class="orderlist-delive-finish">
+        <input class="orderlist-input-code" placeholder='输入收获码' bindinput='receiveCode'></input>
+        <image class="orderlist-delive-finish-pic" bindtap="deliverFinish" data-pantrymanid="{{item.pantryManId}}" data-orderId="{{item.orderId}}" data-status="{{item.orderStatus}}" src="../../image/icon/begin_delive.jpg">
+        </image>
+      </view>
+      <view wx:elif="{{item.orderStatus==2}}">
+        <image class="orderlist-deliver-over-pic" src="../../image/icon/green_check.jpg"></image>
+      </view>
+    </view>
+  </view>
+</view>

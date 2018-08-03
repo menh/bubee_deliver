@@ -1,0 +1,28 @@
+<view class="login">
+  <view class="login-box">
+    <view class="attribute-box">
+      <label>姓名：</label>
+      <input placeholder="姓名" bindinput='bindName'></input>
+    </view>
+    <view class="attribute-box">
+      <label>手机号：</label>
+      <input placeholder='电话' bindinput='bindPhone'></input>
+    </view>
+    <view class="attribute-box">
+      <label>学校: </label>
+      <picker class='address-school-val' mode="selector" range="{{schoolNameList}}" value="{{indexS}}" bindchange='listenSchoolSelected'>
+        <view>{{schoolNameList[indexS]}}</view>
+      </picker>
+    </view>
+    <view class="attribute-box">
+      <label>宿舍: </label>
+      <picker class='address-dormitory-val' mode="selector" range="{{dormitoryNameList}}" value="{{indexD}}" bindchange='listenDormitorySelected'>
+        <view>{{dormitoryNameList[indexD]}}</view>
+      </picker>
+    </view>
+    <navigator url="../orderList/orderList">
+      <button bindtap='registerPantryman'>提交</button>
+    </navigator>
+    
+  </view>
+</view>

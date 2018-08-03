@@ -1,0 +1,30 @@
+<view class="orderdetail">
+  <view class="orderdetail-outborder">
+    <view class="orderdetail-orderinfo">
+      <view class="orderdetail-orderid">订单号：<text class="orderdetail-orderid-val">{{orderInfo.orderId}}</text></view>
+      <view class="orderdetail-pantrymanid">收货人：<text class="orderdetail-pantrymanid-val" >{{address.receiverName}}</text> </view>
+      <view class="orderdetail-address" >地址：<text class="orderdetail-address-val" >{{mapSchoolName[address.schoolId].schoolName}} {{mapDormitoryName[address.dormitoryId].dormitoryName}}{{address.roomId}}</text> </view>
+      <view class="orderdetail-phone" >电话：<text class="orderdetail-phone-val">{{address.receiverPhone}}</text></view>
+      <view>商品清单</view>
+      <view class="orderdetail-goodlist" wx:for="{{orderDetail}}" wx:for-index="index" wx:key="id">
+        <text class="good-name">{{mapGoodName[item.goodId].goodName}}</text>
+        <text class="good-num" decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;X{{item.goodNum}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="orderdetail-outborder">
+    <view class="orderdetail-order-time">
+      <view>订单创建时间 {{orderInfo.orderTime}}</view>
+      <view>开始配送时间 {{orderInfo.benDeliverTime}}</view>
+      <view>配送完成时间 {{orderInfo.endDeliverTime}}</view>
+    </view>
+  </view>
+  <button bindtap='orderError' class="orderdetail-error-button">订单异常报告</button>
+  <modal hidden="{{hidden}}" title="订单异常" confirm-text="提交" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm">
+    <checkbox-group bindchange="checkboxchange">
+      <checkbox value="connectFail" data-connectFail="true">联系不上</checkbox>
+      <checkbox value="rejustReceive" data-rejustReceive="true">拒绝收获</checkbox>
+    </checkbox-group>
+    <input placeholder='输入问题原因'></input>
+   </modal>
+</view>
